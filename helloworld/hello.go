@@ -31,5 +31,3 @@ func greetingPrefix(language string) (prefix string) {
 	}
 	return prefix
 }
-
-var puts = fmt.Println
