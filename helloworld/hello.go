@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package hello
 
 const (
 	spanish            = "Spanish"
