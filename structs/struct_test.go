@@ -38,16 +38,19 @@ func TestArea(t *testing.T) {
 
 func TestAreaTable(t *testing.T) {
 	areaTests := []struct {
-		shape Shape
-		want  float64
+		name    string
+		shape   Shape
+		hasArea float64
 	}{
-		{Rectangle{12, 6}, 72.0},
-		{Circle{10}, 314.1592653589793},
-		{Triangle{12, 6}, 36.0},
+		{name: "Rectangle", shape: Rectangle{12, 6}, hasArea: 72.0},
+		{name: "Circle", shape: Circle{10}, hasArea: 314.1592653589793},
+		{name: "Triangle", shape: Triangle{12, 6}, hasArea: 36.0},
 	}
 
 	for _, tt := range areaTests {
-		checkArea(t, tt.shape, tt.want)
+		t.Run(tt.name, func(t *testing.T) {
+			checkArea(t, tt.shape, tt.hasArea)
+		})
 	}
 }
 
