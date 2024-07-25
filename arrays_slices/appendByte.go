@@ -5,9 +5,7 @@ import "fmt"
 var p = fmt.Println
 
 func AppendBytes(slice []byte, data ...byte) []byte {
-	newSlice := append(slice, data...)
-	p(newSlice)
-	return newSlice
+	return append(slice, data...)
 }
 
 func AppendBytesWithCopy(slice []byte, data ...byte) []byte {
