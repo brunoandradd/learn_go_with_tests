@@ -13,14 +13,21 @@ func TestWallet(t *testing.T) {
 		}
 	}
 
-	assertError := func(t testing.TB, err error, want string) {
+	assertError := func(t testing.TB, err error, want error) {
 		t.Helper()
 		if err == nil {
 			t.Fatal("wanted an error but didn't get one")
 		}
 
-		if err.Error() != want {
+		if err != want {
 			t.Errorf("got %q, want %q", err, want)
+		}
+	}
+
+	assertNoError := func(t testing.TB, got error) {
+		t.Helper()
+		if got != nil {
+			t.Fatal("got an error but didn't want one")
 		}
 	}
 	t.Run("deposit", func(t *testing.T) {
@@ -31,23 +38,19 @@ func TestWallet(t *testing.T) {
 		assertBalance(t, wallet, want)
 	})
 
-	t.Run("withdraw", func(t *testing.T) {
+	t.Run("withdraw with funds", func(t *testing.T) {
 		wallet := Wallet{balance: Bitcoin(20)}
-		wallet.Withdraw(Bitcoin(10))
+		err := wallet.Withdraw(Bitcoin(10))
 
-		want := Bitcoin(10)
-		assertBalance(t, wallet, want)
+		assertNoError(t, err)
+		assertBalance(t, wallet, Bitcoin(10))
 	})
 
 	t.Run("withdraw insufficent funds", func(t *testing.T) {
 		wallet := Wallet{balance: Bitcoin(20)}
 		err := wallet.Withdraw(Bitcoin(100))
 
-		assertError(t, err, "cannot withdraw, without funds")
+		assertError(t, err, ErrInsufficientFunds)
 		assertBalance(t, wallet, Bitcoin(20))
 	})
 }
-
-
-// continue here
-// https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/pointers-and-errors#unchecked-errors
