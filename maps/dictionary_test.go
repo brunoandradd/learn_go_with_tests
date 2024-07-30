@@ -114,6 +114,3 @@ func assertDefinition(t testing.TB, dictionary Dictionary, word, definition stri
 	}
 	assertStrings(t, got, definition)
 }
-
-// continue here
-// https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/maps#write-the-test-first-6
