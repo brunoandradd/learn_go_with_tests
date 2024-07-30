@@ -47,6 +47,10 @@ func (d Dictionary) Update(key, value string) error {
 	return nil
 }
 
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
+}
+
 func (d Dollar) ToSring() string {
 	return fmt.Sprintf("$ %d", d)
 }
